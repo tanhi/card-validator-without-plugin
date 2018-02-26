@@ -72,3 +72,27 @@ const form = document.querySelector("form");
 ¿Tengo un arreglo? ¿Algo diferente? ¿Cómo le hago para implementar metodos de arreglo en otras cosas que no son arreglos?
 
 2. La solucion se tiene que hacer **con ES6** con los temas vistos en clase.
+
+#### Validaciones por realizar
+
+##### Fecha vencimiento (solo 3 validaciones son necesarias)
+1. No string vacio
+2. Sólo números
+3. Que sean 2 digitos de año y 2 de mes
+4. Los numeros no pueden ser negativos
+5. El mes no puede ser mayor a 12
+6. Que el numero sea futuro (no hoy ni antes)
+7. Revisar el formato
+
+##### CVV (todas son necesarias)
+1. No string vacio
+2. Sean SOLO 3 digitos (no string ni boolean ni nada)
+3. Los numeros sean positivos (que numeros son positivos de 3 digitos¿)
+
+##### Nombre (3 de las 6 son necesarias)
+1. No string vacio
+2. SOLO Sea string
+3. Cada palabra maximo tiene 30 caracteres
+4. mayusculas y minusculas
+5. MINIMO 2 palabras
+6. No empieza con espacios
