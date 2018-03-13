@@ -8,62 +8,75 @@ const formValue =[];
 const info = array =>{
   const formValue =[];
   array.forEach(item=>formValue.push(item.value));
+  console.log(formValue);
   return formValue;
 }
 
 //Validación de número de tarjeta mediante algoritmo de luhn
-const validateCardNumber = cardNumber =>{
-	let arrayNumbers = cardNumber.split('');
-	let arrayInverse = arrayNumbers.reverse();
-	let sum = 0;
-	if( cardNumber.length === 0){
-    element.className = 'error'
-    return false;
-	}
-  else {
-      arrayInverse.forEach((item,i)=>{
-      arrayInverse[i] = parseInt(arrayInverse[i]);
-      if(i % 2 == 1){
-				arrayInverse[i] = (parseInt((arrayInverse[i] * 2 )/ 10 )) + ((arrayInverse[i] * 2 ) % 10 );
-			}
-			sum += arrayInverse[i];
+const validateCardNumber = element =>{
+  let sum = 0;
+    //Convertir valor del input en array de números e invertirlo
+    let cardNumberValue = Array.from(element.value);
+    let numberArray = cardNumberValue.map(num => { return Number(num); }).reverse();
 
-    						});
-      element.className = 'success'
-	    return sum % 10 === 0;
+    numberArray.forEach((num, index) =>{
+      if (index % 2 != 0) { //seleccionar índices pares y multiplicarlos por 2
+        let evenNumber = num * 2;
+        if (evenNumber > 9) { //si son mayor a 9 sumar el valor de su índice 0 y 1
+            evenNumber = evenNumber.toString();
+            let evenNumeZero = Number(evenNumber[0]);
+            let evenNumeOne = Number(evenNumber[1]);
+            let sumEvenNumber =  evenNumeZero + evenNumeOne;
+            sum = sum + sumEvenNumber;
+            } else {
+                sum = sum + evenNumber;
+                }
+            } else {
+        sum = sum + num;
+        }
+    });
+
+
+  if (sum % 10 === 0) { //Dividir la suma entre 10, si es módulo 0 cambiar la clase a "success", si no lo es a "error"
+    element.className = 'success'
+    return true;
+    } else {
+    element.className = 'error'
+    }
   }
-}
 
 // validación de fecha de vencimiento será true, la condición se eencuentra en el html
-const validateExpiryDate = item =>{
+const validateExpiryDate = element =>{
+  let expireDateForm = document.querySelector("#exp");
+  expireDateForm.className = 'success'
   return true;
 }
 
 //validación de número Cvv
-const validateVerificationValue = item =>{
-  item = parseInt(item);
-  console.log(item);
-  // Si el elemento no es un número o es menor que 100 o mayor a 999
-   if (isNaN(item) || item < 100 ||item > 999) {
-       return false;
-   } else {
-       return true;
-   }
-}
-
-//validación del nombre
-const validateName = item =>{
-    if(item.length <= 30){
-       let element = document.querySelector("#name")
+const validateVerificationValue = element =>{
+  let cvvValue = parseInt(element.value);
+    if(cvvValue > 100){
         element.className = "success";
         return true;
     }else{
         element.className = "error";
+        return false
     }
-    return false;
 }
 
-//Ejecuta las funciones de validación y evalua si son true
+//validación del nombre
+const validateName = element =>{
+  let nameValue = element.value;
+  if(nameValue.length <= 30){
+      element.className = "success";
+      return true;
+  }else{
+      element.className = "error";
+  }
+  console.log(" name ")
+}
+
+//Ejecuta las funciones de validación ynameFormevalua si son true
 const validateCardDetails = array => {
   info(formArray);
   if(validateCardNumber(formArray[0]) && validateExpiryDate(formArray[1]) && validateVerificationValue(formArray[2]) && validateName(formArray[3]))  //escribe tu código aqui
